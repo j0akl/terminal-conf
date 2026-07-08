@@ -59,7 +59,7 @@ case "$OS" in
   Linux)
     info "Installing packages via apt..."
     sudo apt-get update
-    sudo apt-get install -y tmux git ripgrep fd-find jq nodejs npm python3 python3-pip curl unzip fontconfig
+    sudo apt-get install -y tmux git ripgrep fd-find jq nodejs npm python3 python3-pip curl unzip fontconfig glow
     warn "On Debian/Ubuntu, fd installs as 'fdfind'. Add an 'fd' alias/symlink for telescope."
     warn "apt's neovim is often too old. Install neovim >= 0.11 from the official release,"
     warn "the unstable PPA, or Homebrew-on-Linux before using this config."
@@ -105,6 +105,13 @@ link "$REPO_DIR/nvim"                          "$HOME/.config/nvim"
 link "$REPO_DIR/tmux/tmux.conf"                "$HOME/.tmux.conf"
 link "$REPO_DIR/claude/settings.json"          "$HOME/.claude/settings.json"
 link "$REPO_DIR/claude/statusline-command.sh"  "$HOME/.claude/statusline-command.sh"
+
+# glow reads its config from os.UserConfigDir(), which differs by platform.
+case "$OS" in
+  Darwin) GLOW_CFG="$HOME/Library/Application Support/glow/glow.yml" ;;
+  *)      GLOW_CFG="${XDG_CONFIG_HOME:-$HOME/.config}/glow/glow.yml" ;;
+esac
+link "$REPO_DIR/glow/glow.yml"                 "$GLOW_CFG"
 
 # ---------------------------------------------------------------------------
 # 3. Bootstrap neovim plugins headlessly

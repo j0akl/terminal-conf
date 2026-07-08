@@ -1,0 +1,20 @@
+# glow config — https://github.com/charmbracelet/glow
+# Symlinked here by install.sh (Linux: ~/.config/glow/glow.yml,
+# macOS: ~/Library/Application Support/glow/glow.yml).
+
+# Render style: "auto" follows the terminal's light/dark background.
+# Others: dark, light, dracula, notty, or a path to a custom JSON theme.
+style: "auto"
+
+# Page long documents through a pager (like less) instead of dumping to stdout.
+# Handy for reading; `glow file.md` scrolls instead of flooding the terminal.
+pager: true
+
+# Mouse scrolling in the interactive TUI (the `glow` file browser).
+mouse: true
+
+# Word-wrap column. 80 keeps prose readable on wide terminals.
+width: 80
+
+# Include hidden/ignored files when browsing a directory in the TUI.
+all: false

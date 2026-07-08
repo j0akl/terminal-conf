@@ -33,12 +33,17 @@ SKIP_PACKAGES=1 ./install.sh
 nvim/     -> ~/.config/nvim        neovim config (lazy.nvim + LSP + cmp)
 tmux/     -> ~/.tmux.conf          tmux config
 claude/   -> ~/.claude/            Claude Code settings.json + statusline script
+glow/     -> glow.yml (*)          glow terminal markdown renderer config
 Brewfile                           macOS packages (brew bundle)
 install.sh                         installer / symlinker / bootstrapper
 ```
 
 The configs are **symlinked**, not copied — edit them in place and the changes
 show up here, ready to `git commit`.
+
+(*) glow's config path is platform-specific (`os.UserConfigDir()`), so the
+installer symlinks it to `~/.config/glow/glow.yml` on Linux and
+`~/Library/Application Support/glow/glow.yml` on macOS.
 
 ## Tools required
 
@@ -51,6 +56,7 @@ show up here, ready to `git commit`.
 | jq | Claude Code statusline script |
 | node | pyright + typescript-language-server (via Mason), prettier |
 | python | ruff (via Mason) |
+| glow | render markdown in the terminal (`glow file.md`) |
 
 Language servers (`pyright`, `ruff`, `ts_ls`, `lua_ls`) and formatters
 (`stylua`) are installed by **Mason** inside neovim — no manual install needed.

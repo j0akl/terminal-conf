@@ -7,6 +7,7 @@ brew "fd"       # telescope find_files
 brew "jq"       # claude statusline script
 brew "node"     # pyright / typescript-language-server (via Mason) + prettier
 brew "python"   # ruff (via Mason)
+brew "glow"     # terminal markdown renderer
 
 # Nerd Font so nvim-tree / lualine icons render. Set your terminal font to it.
 cask "font-jetbrains-mono-nerd-font"
