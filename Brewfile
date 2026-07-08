@@ -9,5 +9,7 @@ brew "node"     # pyright / typescript-language-server (via Mason) + prettier
 brew "python"   # ruff (via Mason)
 brew "glow"     # terminal markdown renderer
 
+cask "kitty"    # terminal emulator (config in kitty/)
+
 # Nerd Font so nvim-tree / lualine icons render. Set your terminal font to it.
 cask "font-jetbrains-mono-nerd-font"

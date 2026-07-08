@@ -32,6 +32,7 @@ SKIP_PACKAGES=1 ./install.sh
 ```
 nvim/     -> ~/.config/nvim        neovim config (lazy.nvim + LSP + cmp)
 tmux/     -> ~/.tmux.conf          tmux config
+kitty/    -> ~/.config/kitty       kitty terminal config (JetBrainsMono NF, Apprentice theme)
 claude/   -> ~/.claude/            Claude Code settings.json + statusline script
 glow/     -> glow.yml (*)          glow terminal markdown renderer config
 Brewfile                           macOS packages (brew bundle)
@@ -50,6 +51,7 @@ installer symlinks it to `~/.config/glow/glow.yml` on Linux and
 | Tool | Why |
 |------|-----|
 | neovim **0.11+** | editor (config uses the 0.11 `vim.lsp` API) |
+| kitty | terminal emulator (config in `kitty/`) |
 | tmux | terminal multiplexer / panes |
 | ripgrep (`rg`) | telescope live-grep |
 | fd | telescope file finding |

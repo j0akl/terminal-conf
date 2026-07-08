@@ -59,7 +59,7 @@ case "$OS" in
   Linux)
     info "Installing packages via apt..."
     sudo apt-get update
-    sudo apt-get install -y tmux git ripgrep fd-find jq nodejs npm python3 python3-pip curl unzip fontconfig glow
+    sudo apt-get install -y tmux git ripgrep fd-find jq nodejs npm python3 python3-pip curl unzip fontconfig glow kitty
     warn "On Debian/Ubuntu, fd installs as 'fdfind'. Add an 'fd' alias/symlink for telescope."
     warn "apt's neovim is often too old. Install neovim >= 0.11 from the official release,"
     warn "the unstable PPA, or Homebrew-on-Linux before using this config."
@@ -112,6 +112,10 @@ case "$OS" in
   *)      GLOW_CFG="${XDG_CONFIG_HOME:-$HOME/.config}/glow/glow.yml" ;;
 esac
 link "$REPO_DIR/glow/glow.yml"                 "$GLOW_CFG"
+
+# kitty uses ~/.config/kitty on both macOS and Linux. The whole dir is linked
+# so kitty.conf's relative `include current-theme.conf` keeps working.
+link "$REPO_DIR/kitty"                         "${XDG_CONFIG_HOME:-$HOME/.config}/kitty"
 
 # ---------------------------------------------------------------------------
 # 3. Bootstrap neovim plugins headlessly
