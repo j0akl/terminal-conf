@@ -59,8 +59,9 @@ case "$OS" in
   Linux)
     info "Installing packages via apt..."
     sudo apt-get update
-    sudo apt-get install -y tmux git ripgrep fd-find jq nodejs npm python3 python3-pip curl unzip fontconfig glow kitty
+    sudo apt-get install -y tmux git ripgrep fd-find jq nodejs npm python3 python3-pip curl unzip fontconfig glow kitty zsh eza bat fzf zoxide
     warn "On Debian/Ubuntu, fd installs as 'fdfind'. Add an 'fd' alias/symlink for telescope."
+    warn "On Debian/Ubuntu, bat installs as 'batcat' — the zshrc aliases around this automatically."
     warn "apt's neovim is often too old. Install neovim >= 0.11 from the official release,"
     warn "the unstable PPA, or Homebrew-on-Linux before using this config."
     ;;
@@ -103,6 +104,7 @@ chmod +x "$REPO_DIR/claude/statusline-command.sh"
 
 link "$REPO_DIR/nvim"                          "$HOME/.config/nvim"
 link "$REPO_DIR/tmux/tmux.conf"                "$HOME/.tmux.conf"
+link "$REPO_DIR/zsh/zshrc"                     "$HOME/.zshrc"
 link "$REPO_DIR/claude/settings.json"          "$HOME/.claude/settings.json"
 link "$REPO_DIR/claude/statusline-command.sh"  "$HOME/.claude/statusline-command.sh"
 
@@ -116,6 +118,23 @@ link "$REPO_DIR/glow/glow.yml"                 "$GLOW_CFG"
 # kitty uses ~/.config/kitty on both macOS and Linux. The whole dir is linked
 # so kitty.conf's relative `include current-theme.conf` keeps working.
 link "$REPO_DIR/kitty"                         "${XDG_CONFIG_HOME:-$HOME/.config}/kitty"
+
+# ---------------------------------------------------------------------------
+# 2c. Make zsh the default login shell (if it isn't already)
+# ---------------------------------------------------------------------------
+if command -v zsh >/dev/null 2>&1; then
+  zsh_path="$(command -v zsh)"
+  current_shell="$(getent passwd "$USER" 2>/dev/null | cut -d: -f7 || dscl . -read "/Users/$USER" UserShell 2>/dev/null | awk '{print $2}')"
+  if [ "$current_shell" != "$zsh_path" ]; then
+    grep -qxF "$zsh_path" /etc/shells 2>/dev/null || echo "$zsh_path" | sudo tee -a /etc/shells >/dev/null
+    info "Setting default shell to zsh ($zsh_path)..."
+    chsh -s "$zsh_path" || warn "chsh failed — run 'chsh -s $zsh_path' yourself, then re-login."
+  else
+    info "Default shell is already zsh."
+  fi
+else
+  warn "zsh not found — skipping default-shell change."
+fi
 
 # ---------------------------------------------------------------------------
 # 3. Bootstrap neovim plugins headlessly

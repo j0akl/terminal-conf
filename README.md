@@ -1,7 +1,7 @@
 # Jake's Terminal Config
 
-Portable config for **tmux**, **neovim**, and **Claude Code**. Clone, run one
-script, and a fresh machine (macOS or Linux) is set up the way I like it.
+Portable config for **zsh**, **tmux**, **neovim**, and **Claude Code**. Clone,
+run one script, and a fresh machine (macOS or Linux) is set up the way I like it.
 
 ## Quick start
 
@@ -30,9 +30,10 @@ SKIP_PACKAGES=1 ./install.sh
 ## What's inside
 
 ```
+zsh/      -> ~/.zshrc             zsh config (aliases, fzf/zoxide, git-aware prompt)
 nvim/     -> ~/.config/nvim        neovim config (lazy.nvim + LSP + cmp)
 tmux/     -> ~/.tmux.conf          tmux config
-kitty/    -> ~/.config/kitty       kitty terminal config (JetBrainsMono NF, Apprentice theme)
+kitty/    -> ~/.config/kitty       kitty terminal config (JetBrainsMono NF, Rosé Pine theme)
 claude/   -> ~/.claude/            Claude Code settings.json + statusline script
 glow/     -> glow.yml (*)          glow terminal markdown renderer config
 Brewfile                           macOS packages (brew bundle)
@@ -59,6 +60,11 @@ installer symlinks it to `~/.config/glow/glow.yml` on Linux and
 | node | pyright + typescript-language-server (via Mason), prettier |
 | python | ruff (via Mason) |
 | glow | render markdown in the terminal (`glow file.md`) |
+| zsh | login shell (`zsh/zshrc`); installer sets it as default via `chsh` |
+| eza | modern `ls` — aliased to `ls`, plus `ll` (`eza -alh`) |
+| bat | modern `cat` with syntax highlighting — aliased to `cat` (`batcat` on Debian/Ubuntu) |
+| fzf | fuzzy finder — `Ctrl-R` history, `Ctrl-T` files, `Alt-C` cd |
+| zoxide | smarter `cd` — `z <partial-dir>` jumps to frequent dirs |
 
 Language servers (`pyright`, `ruff`, `ts_ls`, `lua_ls`) and formatters
 (`stylua`) are installed by **Mason** inside neovim — no manual install needed.
@@ -77,6 +83,10 @@ ruff/prettier), render-markdown, rainbow brackets, rose-pine theme.
 - `gd` `gr` `K` `<leader>ca` `<leader>rn` — LSP: definition, refs, hover, code action, rename
 - format-on-save is automatic; `<leader>cf` formats manually
 
+**zsh** — shared history, case-insensitive completion, a git-aware prompt, and
+`ls`/`ll`/`cat` aliased to eza/bat. fzf key-bindings (`Ctrl-R`/`Ctrl-T`/`Alt-C`)
+and zoxide (`z <dir>`) are wired up when those tools are present.
+
 **tmux** — `C-a` prefix, vim-style splits/navigation, labeled pane header bars
 with heavy borders so panes are easy to tell apart. `prefix + R` reloads.
 
@@ -86,7 +96,8 @@ statusline showing `user@host:cwd`, git branch + dirty marker, and the model.
 ## Notes / gotchas
 
 - **Debian/Ubuntu**: `fd` is installed as `fdfind`; symlink it to `fd` for
-  telescope. apt's neovim is usually too old — install 0.11+ separately.
+  telescope. `bat` is installed as `batcat` (the zshrc aliases around this).
+  apt's neovim is usually too old — install 0.11+ separately.
 - First neovim launch after install may briefly download treesitter parsers.
 - Plugin versions are pinned in `nvim/lazy-lock.json` for reproducible installs.
   Run `:Lazy update` in neovim to bump them, then commit the lockfile.

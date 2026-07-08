@@ -1,0 +1,70 @@
+# ~/.zshrc — Jake's shell config (symlinked from terminal-config/zsh/zshrc).
+
+# Make $SHELL reflect reality. After a fresh `chsh`, the graphical session may
+# still export the old $SHELL until the next login; fix it here so anything we
+# spawn (tmux especially, which caches $SHELL) uses zsh too.
+if command -v zsh >/dev/null 2>&1; then
+  export SHELL="$(command -v zsh)"
+fi
+
+# --- History ---------------------------------------------------------------
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=100000
+SAVEHIST=100000
+setopt SHARE_HISTORY HIST_IGNORE_DUPS HIST_IGNORE_SPACE INC_APPEND_HISTORY
+
+# --- Behaviour -------------------------------------------------------------
+setopt AUTO_CD              # `foo/` == `cd foo/`
+setopt INTERACTIVE_COMMENTS # allow `# comments` at the interactive prompt
+
+# --- Completion ------------------------------------------------------------
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'  # case-insensitive
+
+# --- Modern replacements for ls / cat --------------------------------------
+# eza -> ls, and `ll` for a long listing.
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza'
+  alias ll='eza -alh'
+fi
+
+# bat -> cat. On Debian/Ubuntu the binary is `batcat`; Homebrew ships `bat`.
+if command -v bat >/dev/null 2>&1; then
+  alias cat='bat'
+elif command -v batcat >/dev/null 2>&1; then
+  alias cat='batcat'
+  alias bat='batcat'
+fi
+
+# --- zoxide: a smarter cd (`z <partial-dir>` jumps to frequent dirs) --------
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
+
+# --- fzf: fuzzy finder (Ctrl-R history · Ctrl-T files · Alt-C cd) ------------
+if command -v fzf >/dev/null 2>&1; then
+  for f in /usr/share/doc/fzf/examples/key-bindings.zsh \
+           /usr/share/fzf/key-bindings.zsh \
+           "$HOME/.fzf.zsh"; do
+    [ -f "$f" ] && source "$f" && break
+  done
+  for c in /usr/share/doc/fzf/examples/completion.zsh \
+           /usr/share/fzf/completion.zsh; do
+    [ -f "$c" ] && source "$c" && break
+  done
+  # Respect .gitignore and include dotfiles when fzf lists files.
+  if command -v fd >/dev/null 2>&1; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+  elif command -v fdfind >/dev/null 2>&1; then
+    export FZF_DEFAULT_COMMAND='fdfind --type f --hidden --exclude .git'
+  fi
+  export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND:-}"
+fi
+
+# --- Prompt (simple, git-aware; swap for starship later if you like) --------
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats ' %F{5}(%b)%f'
+setopt PROMPT_SUBST
+PROMPT='%F{4}%~%f${vcs_info_msg_0_} %F{2}❯%f '
