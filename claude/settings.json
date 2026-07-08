@@ -1,6 +1,9 @@
 {
   "theme": "dark-daltonized",
   "model": "opus",
+  "permissions": {
+    "defaultMode": "auto"
+  },
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
