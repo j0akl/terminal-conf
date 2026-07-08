@@ -9,6 +9,37 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 info() { printf "\033[01;34m==>\033[0m %s\n" "$1"; }
 warn() { printf "\033[01;33m!!\033[0m %s\n" "$1"; }
 
+# JetBrainsMono Nerd Font — the terminal font this setup expects.
+FONT_ZIP_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip"
+
+font_present() {
+  if command -v fc-list >/dev/null 2>&1; then
+    fc-list | grep -qi "JetBrainsMono Nerd Font"
+  else # macOS has no fontconfig; check the user font dir directly
+    ls "$HOME/Library/Fonts"/*JetBrainsMono* >/dev/null 2>&1
+  fi
+}
+
+install_nerd_font() {
+  if font_present; then
+    info "JetBrainsMono Nerd Font already installed."
+    return
+  fi
+  local dir tmp
+  case "$(uname -s)" in
+    Darwin) dir="$HOME/Library/Fonts" ;;
+    *)      dir="$HOME/.local/share/fonts/JetBrainsMono" ;;
+  esac
+  info "Installing JetBrainsMono Nerd Font -> $dir ..."
+  mkdir -p "$dir"
+  tmp="$(mktemp -d)"
+  curl -fsSL "$FONT_ZIP_URL" -o "$tmp/JetBrainsMono.zip"
+  unzip -oq "$tmp/JetBrainsMono.zip" -d "$dir" -x "*.md" "LICENSE"
+  rm -rf "$tmp"
+  command -v fc-cache >/dev/null 2>&1 && fc-cache -f "$dir" >/dev/null 2>&1 || true
+  info "Font installed. Set your terminal font to 'JetBrainsMono Nerd Font'."
+}
+
 # ---------------------------------------------------------------------------
 # 1. Install tools  (skip with SKIP_PACKAGES=1 on an already-provisioned box)
 # ---------------------------------------------------------------------------
@@ -28,7 +59,7 @@ case "$OS" in
   Linux)
     info "Installing packages via apt..."
     sudo apt-get update
-    sudo apt-get install -y tmux git ripgrep fd-find jq nodejs npm python3 python3-pip
+    sudo apt-get install -y tmux git ripgrep fd-find jq nodejs npm python3 python3-pip curl unzip fontconfig
     warn "On Debian/Ubuntu, fd installs as 'fdfind'. Add an 'fd' alias/symlink for telescope."
     warn "apt's neovim is often too old. Install neovim >= 0.11 from the official release,"
     warn "the unstable PPA, or Homebrew-on-Linux before using this config."
@@ -46,6 +77,11 @@ if command -v nvim >/dev/null 2>&1; then
     warn "Detected neovim $ver — this config requires 0.11+. Upgrade before launching."
   fi
 fi
+
+# ---------------------------------------------------------------------------
+# 1b. Terminal font (runs even under SKIP_PACKAGES; idempotent)
+# ---------------------------------------------------------------------------
+install_nerd_font
 
 # ---------------------------------------------------------------------------
 # 2. Symlink configs (backing up any existing real files)

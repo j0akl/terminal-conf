@@ -14,11 +14,12 @@ cd ~/dev/terminal-config
 `install.sh` will:
 
 1. Install the required tools (Homebrew on macOS, apt on Linux).
-2. Symlink the configs into place, backing up anything already there to `*.bak`.
-3. Bootstrap neovim plugins (lazy.nvim) and LSP servers/formatters (Mason).
+2. Install JetBrainsMono Nerd Font (both platforms; skipped if already present).
+3. Symlink the configs into place, backing up anything already there to `*.bak`.
+4. Bootstrap neovim plugins (lazy.nvim) and LSP servers/formatters (Mason).
 
-Then set your terminal font to **JetBrainsMono Nerd Font** (installed by the
-script on macOS) so neovim's icons render.
+The installer also installs **JetBrainsMono Nerd Font** (macOS + Linux) — set
+your terminal font to it so neovim's icons render.
 
 Re-running on a machine that already has the tools? Skip the package step:
 
