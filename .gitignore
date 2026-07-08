@@ -1,0 +1,5 @@
+# Backups created by install.sh and editing
+*.bak
+
+# OS cruft
+.DS_Store
