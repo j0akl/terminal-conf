@@ -62,9 +62,28 @@ if command -v fzf >/dev/null 2>&1; then
   export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND:-}"
 fi
 
+# --- tmux ------------------------------------------------------------------
+alias tls='tmux ls'                  # list sessions
+alias tn='tmux new -s'               # new session:        tn work
+alias ta='tmux attach -t'            # attach:             ta work
+alias tk='tmux kill-session -t'      # kill one session:   tk work
+alias trn='tmux rename-session -t'   # rename:             trn old new
+alias tksv='tmux kill-server'        # kill every session
+
+# `t [name]` — attach to a session, creating it if it doesn't exist.
+# `t` alone attaches to the last session (or starts a fresh one).
+t() {
+  if [ -z "$1" ]; then
+    tmux attach || tmux new
+  else
+    tmux attach -t "$1" 2>/dev/null || tmux new -s "$1"
+  fi
+}
+
 # --- Prompt (simple, git-aware; swap for starship later if you like) --------
 autoload -Uz vcs_info
 precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats ' %F{5}(%b)%f'
 setopt PROMPT_SUBST
 PROMPT='%F{4}%~%f${vcs_info_msg_0_} %F{2}❯%f '
+export PATH="$HOME/.local/bin:$HOME/.openclaw/bin:$HOME/.npm-global/bin:$PATH"
