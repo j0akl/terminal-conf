@@ -93,3 +93,11 @@ zstyle ':vcs_info:git:*' formats ' %F{5}(%b)%f'
 setopt PROMPT_SUBST
 PROMPT='%F{4}%~%f${vcs_info_msg_0_} %F{2}❯%f '
 export PATH="$HOME/.local/bin:$HOME/.openclaw/bin:$HOME/.npm-global/bin:/opt/homebrew/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/jlynn/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end

@@ -1,5 +1,6 @@
 # Tools for the terminal config (macOS). Install with: brew bundle
-brew "neovim"   # 0.11+ required (uses vim.lsp.config/enable)
+brew "neovim"        # 0.11+ required (uses vim.lsp.config/enable)
+brew "tree-sitter"   # CLI (0.26.1+) — nvim-treesitter main branch compiles parsers with it
 brew "tmux"
 brew "git"
 brew "ripgrep"  # telescope live_grep
