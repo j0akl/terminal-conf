@@ -7,9 +7,12 @@ input=$(cat)
 
 cwd=$(echo "$input" | jq -r '.workspace.current_dir // .cwd // empty')
 model=$(echo "$input" | jq -r '.model.display_name // empty')
+model_id=$(echo "$input" | jq -r '.model.id // empty')
+transcript=$(echo "$input" | jq -r '.transcript_path // empty')
 
-# Shorten $HOME to ~
-cwd_display="${cwd/#$HOME/\~}"
+# Shorten $HOME to ~ (assign literal tilde via a var so no backslash leaks in)
+tilde="~"
+cwd_display="${cwd/#$HOME/$tilde}"
 
 user="$(whoami)"
 host="$(hostname -s)"
@@ -28,5 +31,43 @@ fi
 model_seg=""
 [ -n "$model" ] && model_seg=" \033[02m${model}\033[00m"
 
-printf "\033[01;32m%s@%s\033[00m:\033[01;34m%s\033[00m%b%b" \
-  "$user" "$host" "$cwd_display" "$branch_seg" "$model_seg"
+# Context window usage. The transcript's most recent (main-chain) assistant
+# usage gives the live context length: input + cache_creation + cache_read.
+ctx_seg=""
+if [ -n "$transcript" ] && [ -f "$transcript" ]; then
+  # Reverse the file (tail -r on macOS/BSD, tac on GNU) so the newest
+  # matching usage line comes first.
+  if command -v tac >/dev/null 2>&1; then reverse="tac"; else reverse="tail -r"; fi
+  used=$($reverse "$transcript" 2>/dev/null | jq -rc \
+    'select(.type=="assistant" and (.isSidechain|not) and .message.usage)
+     | .message.usage
+     | (.input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens)' \
+    2>/dev/null | head -1)
+
+  if [ -n "$used" ] && [ "$used" -gt 0 ] 2>/dev/null; then
+    # 1M context for [1m] models, otherwise the standard 200k.
+    case "${model_id}${model}" in
+      *1m*|*1M*) limit=1000000; limit_lbl="1M" ;;
+      *)         limit=200000;  limit_lbl="200k" ;;
+    esac
+
+    pct=$(( used * 100 / limit ))
+
+    # k-formatted used tokens (one decimal below 10k).
+    if [ "$used" -ge 10000 ]; then
+      used_lbl="$(( (used + 500) / 1000 ))k"
+    else
+      used_lbl="$(awk "BEGIN{printf \"%.1fk\", $used/1000}")"
+    fi
+
+    # green <50%, yellow <80%, red otherwise.
+    if   [ "$pct" -lt 50 ]; then ctx_color="00;32"
+    elif [ "$pct" -lt 80 ]; then ctx_color="00;33"
+    else                         ctx_color="01;31"
+    fi
+    ctx_seg=" \033[${ctx_color}m ${used_lbl}/${limit_lbl} ${pct}%\033[00m"
+  fi
+fi
+
+printf "\033[01;32m%s@%s\033[00m:\033[01;34m%s\033[00m%b%b%b" \
+  "$user" "$host" "$cwd_display" "$branch_seg" "$model_seg" "$ctx_seg"
