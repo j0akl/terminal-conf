@@ -92,7 +92,10 @@ precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats ' %F{5}(%b)%f'
 setopt PROMPT_SUBST
 PROMPT='%F{4}%~%f${vcs_info_msg_0_} %F{2}❯%f '
-export PATH="$HOME/.local/bin:$HOME/.openclaw/bin:$HOME/.npm-global/bin:/opt/homebrew/bin:$PATH"
+# $HOME/bin goes first so the claude shim there wins over ~/.local/bin/claude.
+# The shim keeps Claude Code's macOS permission grants from resetting on every
+# auto-update -- see terminal-conf/claude/claude-shim.sh for why.
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.openclaw/bin:$HOME/.npm-global/bin:/opt/homebrew/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="/Users/jlynn/Library/pnpm"

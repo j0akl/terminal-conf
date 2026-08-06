@@ -1,0 +1,15 @@
+# ~/.zshenv — sourced by every zsh, interactive or not (symlinked from
+# terminal-conf/zsh/zshenv).
+#
+# $HOME/bin has to beat $HOME/.local/bin everywhere, not just at an interactive
+# prompt, so scripts and launchd jobs pick up the claude shim too. The shim is
+# what keeps Claude Code's macOS permission grants alive across auto-updates --
+# see terminal-conf/claude/claude-shim.sh.
+#
+# /etc/zprofile runs path_helper after this for login shells; it hoists the
+# system directories to the front but preserves the relative order of everything
+# else, so $HOME/bin stays ahead of $HOME/.local/bin.
+case ":$PATH:" in
+    *":$HOME/bin:"*) ;;
+    *) export PATH="$HOME/bin:$PATH" ;;
+esac
