@@ -34,7 +34,7 @@ zsh/      -> ~/.zshrc             zsh config (aliases, fzf/zoxide, git-aware pro
 nvim/     -> ~/.config/nvim        neovim config (lazy.nvim + LSP + cmp)
 tmux/     -> ~/.tmux.conf          tmux config
 kitty/    -> ~/.config/kitty       kitty terminal config (JetBrainsMono NF, Rosé Pine theme)
-claude/   -> ~/.claude/            Claude Code settings.json + statusline script
+claude/   -> ~/.claude/            Claude Code CLAUDE.md (global instructions), settings.json, statusline
 glow/     -> glow.yml (*)          glow terminal markdown renderer config
 Brewfile                           macOS packages (brew bundle)
 install.sh                         installer / symlinker / bootstrapper
