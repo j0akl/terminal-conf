@@ -45,21 +45,54 @@ fi
 dir=$(printf '%s' "$payload" | jq -r '.cwd // empty' 2>/dev/null)
 [ -n "$dir" ] || dir=$PWD
 
-# Include the pane index, not just session:window — several Claude sessions are
-# often split across panes of one window, so the window alone does not say which
-# one finished.
-# window_name is omitted deliberately: tmux automatic-rename sets it to the
-# running command, which for a Claude pane is just the version string.
-where=$(tmux display -p -t "${TMUX_PANE:-}" \
-  '#{session_name}:#{window_index}.#{pane_index}' 2>/dev/null)
-[ -n "$where" ] || where="turn complete"
+# TMUX_PANE can name a pane that has since been closed, and recording a dead
+# jump target would send C-a g nowhere. Note that `display -p -t <unknown>`
+# exits 0 and expands the format to empty fields rather than failing, so
+# membership in list-panes is the only reliable existence check.
+pane=${TMUX_PANE:-}
+if [ -n "$pane" ] && tmux list-panes -a -F '#{pane_id}' 2>/dev/null | grep -qx -- "$pane"; then
+  # Include the pane index, not just session:window — several Claude sessions
+  # are often split across panes of one window, so the window alone does not say
+  # which one finished. window_name is omitted deliberately: tmux
+  # automatic-rename sets it to the running command, which for a Claude pane is
+  # just the version string.
+  where=$(tmux display -p -t "$pane" \
+    '#{session_name}:#{window_index}.#{pane_index}' 2>/dev/null)
+else
+  pane=""
+fi
+[ -n "${where:-}" ] || where="turn complete"
 
 [ -n "${CLAUDE_NOTIFY_DRY_RUN:-}" ] && exit 0
 
-# argv form keeps the directory and window names out of the AppleScript source,
-# so a quote in either cannot break or inject into the script.
+title="Claude Code — $(basename "$dir")"
+
+# Mark the pane so its border header calls it out, and record it as the most
+# recent finish for the C-a g binding. tmux.conf renders and clears the marker.
+if [ -n "$pane" ]; then
+  tmux set -p -t "$pane" @claude_done 1 2>/dev/null
+  tmux set -g @claude_last_done "$pane" 2>/dev/null
+fi
+
+# terminal-notifier can attach a click action, which osascript cannot. The pane
+# id is baked into -execute rather than read at click time, so an old
+# notification still goes to the pane that produced it. -group lets a later
+# finish in the same pane replace the earlier notification instead of stacking.
+if [ -n "$pane" ] && command -v terminal-notifier >/dev/null 2>&1; then
+  terminal-notifier \
+    -title "$title" \
+    -message "$where — click to jump" \
+    -sound Ping \
+    -group "claude-$pane" \
+    -execute "$HOME/.claude/tmux-goto-done.sh --focus-terminal $pane" \
+    >/dev/null 2>&1 && exit 0
+fi
+
+# Fallback: no click action, but it needs no permission grant of its own. argv
+# form keeps the directory and window names out of the AppleScript source, so a
+# quote in either cannot break or inject into the script.
 osascript \
   -e 'on run argv' \
   -e 'display notification (item 2 of argv) with title (item 1 of argv) sound name "Ping"' \
   -e 'end run' \
-  "Claude Code — $(basename "$dir")" "$where" >/dev/null 2>&1 || true
+  "$title" "$where — C-a g to jump" >/dev/null 2>&1 || true

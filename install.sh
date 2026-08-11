@@ -102,6 +102,7 @@ link() {
 
 chmod +x "$REPO_DIR/claude/statusline-command.sh"
 chmod +x "$REPO_DIR/claude/notify-stop.sh"
+chmod +x "$REPO_DIR/claude/tmux-goto-done.sh"
 
 link "$REPO_DIR/nvim"                          "$HOME/.config/nvim"
 link "$REPO_DIR/tmux/tmux.conf"                "$HOME/.tmux.conf"
@@ -110,6 +111,7 @@ link "$REPO_DIR/claude/settings.json"          "$HOME/.claude/settings.json"
 link "$REPO_DIR/claude/CLAUDE.md"              "$HOME/.claude/CLAUDE.md"
 link "$REPO_DIR/claude/statusline-command.sh"  "$HOME/.claude/statusline-command.sh"
 link "$REPO_DIR/claude/notify-stop.sh"         "$HOME/.claude/notify-stop.sh"
+link "$REPO_DIR/claude/tmux-goto-done.sh"      "$HOME/.claude/tmux-goto-done.sh"
 
 # glow reads its config from os.UserConfigDir(), which differs by platform.
 case "$OS" in

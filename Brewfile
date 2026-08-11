@@ -6,6 +6,7 @@ brew "git"
 brew "ripgrep"  # telescope live_grep
 brew "fd"       # telescope find_files
 brew "jq"       # claude statusline script
+brew "terminal-notifier"  # clickable turn-finish notifications (claude/notify-stop.sh)
 brew "node"     # pyright / typescript-language-server (via Mason) + prettier
 brew "python"   # ruff (via Mason)
 brew "glow"     # terminal markdown renderer
