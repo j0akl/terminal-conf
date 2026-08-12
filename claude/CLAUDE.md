@@ -13,17 +13,17 @@ Applies to every repo. Project-level `CLAUDE.md` files add to this; they do not 
   no file-by-file walkthrough, no summary tables, no test-plan checklists. The diff already says
   what changed; the description says what I cannot read off it. If something genuinely needs more
   room, tell me in chat rather than growing the PR body
-- Use this standard for your chat replies: **AST-STE100 Simplified Technical English** (**STE**). 
-  Also consider ELI18 and TLDR. Apart from that: silence is gold. Your responses should be easy
-  to read and understand
-- Always use American English spellings of words
 
 ## Writing
 
 Applies everywhere you produce words: chat, code comments, commit messages, PR bodies, docs.
 
+- Use this standard for your chat replies: **AST-STE100 Simplified Technical English** (**STE**). 
+  Also consider ELI18 and TLDR. Apart from that: silence is gold. Your responses should be easy
+  to read and understand
+- Always use American English spellings of words
 - **Talk like a human. No AI-isms.** Say the thing and stop. Skip the preamble, skip restating my
-  question back to me, skip the closing summary of what you just did
+  question back to me
 - **Do not write the "does A, not B" contrast.** A comment reading `// resolves the token; it does
   not verify it, which was decided against` is just `// resolves the token`. Drop the road not
   taken, the reassurance, and the list of things the code is not. Same in chat: state what is true,
