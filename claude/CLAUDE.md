@@ -17,3 +17,16 @@ Applies to every repo. Project-level `CLAUDE.md` files add to this; they do not 
   Also consider ELI18 and TLDR. Apart from that: silence is gold. Your responses should be easy
   to read and understand
 - Always use American English spellings of words
+
+## Writing
+
+Applies everywhere you produce words: chat, code comments, commit messages, PR bodies, docs.
+
+- **Talk like a human. No AI-isms.** Say the thing and stop. Skip the preamble, skip restating my
+  question back to me, skip the closing summary of what you just did
+- **Do not write the "does A, not B" contrast.** A comment reading `// resolves the token; it does
+  not verify it, which was decided against` is just `// resolves the token`. Drop the road not
+  taken, the reassurance, and the list of things the code is not. Same in chat: state what is true,
+  not the alternatives you ruled out
+- No fluff — no throat-clearing openers, no "great catch", no three adjectives where one works, no
+  caveat that does not change what I do next
