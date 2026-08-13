@@ -30,3 +30,20 @@ Applies everywhere you produce words: chat, code comments, commit messages, PR b
   not the alternatives you ruled out
 - No fluff — no throat-clearing openers, no "great catch", no three adjectives where one works, no
   caveat that does not change what I do next
+- Keep code comments to a minimum. Only explain what's absolutely necessary, no fluff
+
+## Editing
+
+Applies to code and docs edits
+
+- Make the smallest edit possible to solve the problem well and completely. Simplicity is often 
+  better than complexity
+- Ensure you write complete solutions in code. When decisions are required ask of course, but
+  when a problem is presented your goal should be to solve that problem satisfactorily
+- Update docs without asking - if there's a document relevant to a change you're making,
+  default to making the update that makes sense
+  - This applies to tickets in linear too, if a ticket is done close it and say you closed it.
+    If you're adding a comment, just add it and mention you did it
+  - However, if you're opening a ticket, ask first with a short description
+
+
