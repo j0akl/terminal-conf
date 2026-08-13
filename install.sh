@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install Jake's terminal config (tmux + neovim + claude) on a fresh machine.
+# Install Jake's terminal config (tmux + neovim + Codex + Claude) on a fresh machine.
 # Installs the required tools, then symlinks the configs into place.
 # Safe to re-run: existing non-symlink files are backed up to *.bak.
 set -euo pipefail
@@ -103,10 +103,16 @@ link() {
 chmod +x "$REPO_DIR/claude/statusline-command.sh"
 chmod +x "$REPO_DIR/claude/notify-stop.sh"
 chmod +x "$REPO_DIR/claude/tmux-goto-done.sh"
+chmod +x "$REPO_DIR/codex/notify-hook.sh"
 
 link "$REPO_DIR/nvim"                          "$HOME/.config/nvim"
 link "$REPO_DIR/tmux/tmux.conf"                "$HOME/.tmux.conf"
 link "$REPO_DIR/zsh/zshrc"                     "$HOME/.zshrc"
+link "$REPO_DIR/codex/config.toml"             "$HOME/.codex/config.toml"
+link "$REPO_DIR/codex/hooks.json"              "$HOME/.codex/hooks.json"
+link "$REPO_DIR/codex/notify-hook.sh"          "$HOME/.codex/notify-hook.sh"
+link "$REPO_DIR/codex/rules/default.rules"     "$HOME/.codex/rules/default.rules"
+link "$REPO_DIR/claude/CLAUDE.md"              "$HOME/.codex/AGENTS.md"
 link "$REPO_DIR/claude/settings.json"          "$HOME/.claude/settings.json"
 link "$REPO_DIR/claude/CLAUDE.md"              "$HOME/.claude/CLAUDE.md"
 link "$REPO_DIR/claude/statusline-command.sh"  "$HOME/.claude/statusline-command.sh"

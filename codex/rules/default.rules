@@ -1,0 +1,4 @@
+prefix_rule(pattern=["git", "add"], decision="allow")
+prefix_rule(pattern=["git", "commit"], decision="allow")
+prefix_rule(pattern=["find", "/Users/jlynn/dev/infrastructure"], decision="allow")
+prefix_rule(pattern=["/bin/cat", "/Users/jlynn/dev/infrastructure/README.md", "/Users/jlynn/dev/platform-services/README.md", "/Users/jlynn/dev/web-app/README.md", "/Users/jlynn/dev/web-app/monorepo-plan.md"], decision="allow")
