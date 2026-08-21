@@ -56,15 +56,31 @@ substantial work.
 | Tier | Use when | Context research | Delivery agents | Independent review |
 | --- | --- | --- | --- | --- |
 | **Fast** | The closing condition is clear and the change is small, isolated, and low risk. Typical examples are documentation, tests, copy, and straightforward defects. | Skip context agents unless the ticket links to a source needed to understand the work. | Reproducer, main-agent fix proposal, implementer. | Code reviewer. Add security or HIPAA review when the repository or diff has that surface. |
-| **Standard** | Normal feature and defect work with clear ownership in one repository. This is the default. | Run the Linear context agent. Run Slack, Notion, and Granola agents when the ticket, product area, ambiguity, or known prior decisions make that source relevant. Run selected agents concurrently. | Reproducer, fix planner, implementer. | Code reviewer. Add security or HIPAA review when the repository or diff has that surface. |
-| **Full** | The work is ambiguous, high impact, sensitive, cross-repository, or difficult to reverse. | Run all four context agents concurrently. | Reproducer, fix planner, implementer. | Security, code, and HIPAA reviewers concurrently. Use fresh relevant reviewers after approved corrections. |
+| **Standard** | Normal feature and defect work with clear ownership in one repository. This includes work inside established PHI flows, approved external services and BAAs, and existing AWS architecture. This is the default. | Run the Linear context agent. Run Slack, Notion, and Granola agents when the ticket, product area, ambiguity, or known prior decisions make that source relevant. Run selected agents concurrently. | Reproducer, fix planner, implementer. | Code reviewer. Add security or HIPAA review when the repository or diff has that surface. |
+| **Full** | The work materially changes a clinical, data, vendor, infrastructure, security, or operational boundary; is ambiguous or high impact; spans repositories or teams; or is difficult to reverse. | Run all four context agents concurrently. | Reproducer, fix planner, implementer. | Security, code, and HIPAA reviewers concurrently. Use fresh relevant reviewers after approved corrections. |
 
-Use the Full tier for PHI or clinical behavior; patient identity; authentication
-or authorization; security boundaries; secrets; encryption; logging; data
-retention; infrastructure; migrations; deployments; irreversible operations;
-multiple repositories or teams; production incidents; substantial customer
-impact; conflicting requirements; missing acceptance criteria; prior failed
-fixes; or material uncertainty after initial investigation.
+Base tier selection on the proposed change's effect. PHI, external data sources
+and connections, BAAs, and AWS resources are routine in healthcare systems.
+Keep work in Fast or Standard when it stays inside established, reviewed
+boundaries and has a clear closing condition. Select the security and HIPAA
+reviewers from the actual repository and diff surface.
+
+Use the Full tier when the change:
+
+- materially changes which PHI is collected or how it is stored, transmitted,
+  accessed, deleted, retained, disclosed, or isolated;
+- materially changes clinical interpretation, recommendations, scoring, or
+  decision logic;
+- creates or changes authentication, authorization, patient identity, trust
+  boundaries, secrets, or encryption;
+- introduces or changes a third-party recipient, external disclosure, network
+  destination, or BAA responsibility;
+- creates, moves, or materially changes production AWS resources, IAM, audit
+  logging, retention, migrations, deployment, cutover, or rollback behavior;
+- requires destructive or irreversible operations, spans repositories or teams,
+  responds to a production incident, or has substantial customer impact; or
+- has conflicting requirements, missing acceptance criteria, prior failed
+  fixes, or material uncertainty after initial investigation.
 
 Increase the tier when later evidence exposes greater risk, ambiguity, or scope.
 State the increase and its reason. If it materially changes cost, scope, or an
