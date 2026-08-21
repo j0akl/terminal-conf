@@ -13,6 +13,8 @@ Applies to every repo. Project-level `CLAUDE.md` files add to this; they do not 
   no file-by-file walkthrough, no summary tables, no test-plan checklists. The diff already says
   what changed; the description says what I cannot read off it. If something genuinely needs more
   room, tell me in chat rather than growing the PR body
+- Don't respond to comments on PRs without asking, prefer not to do it at all. Applies to both
+  human comments and agent review comments.
 
 ## Writing
 
@@ -22,6 +24,7 @@ Applies everywhere you produce words: chat, code comments, commit messages, PR b
   Also consider ELI18 and TLDR. Apart from that: silence is gold. Your responses should be easy
   to read and understand
 - Always use American English spellings of words
+  - enroll instead of enrol
 - **Talk like a human. No AI-isms.** Say the thing and stop. Skip the preamble, skip restating my
   question back to me
 - **Do not write the "does A, not B" contrast.** A comment reading `// resolves the token; it does

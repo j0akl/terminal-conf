@@ -1,11 +1,11 @@
 model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 model_auto_compact_token_limit = 1000000000
-service_tier = "default"
-approvals_reviewer = "user"
+approvals_reviewer = "auto_review"
 notify = ["/Users/jlynn/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 approval_policy = "on-request"
-sandbox_mode = "read-only"
+sandbox_mode = "workspace-write"
+service_tier = "default"
 
 [agents]
 enabled = true
@@ -22,10 +22,23 @@ trust_level = "trusted"
 [projects."/Users/jlynn/dev/patient-survey"]
 trust_level = "trusted"
 
+[projects."/Users/jlynn/Documents/Codex/2026-08-13-just-checking-auto-review-works-try"]
+trust_level = "trusted"
+
+[projects."/Users/jlynn/Documents/Codex/2026-08-14/is-t"]
+trust_level = "trusted"
+
+[projects."/Users/jlynn/Documents/Codex/2026-08-14-in-dev-mirror-backend-a-developer"]
+trust_level = "trusted"
+
+[projects."/Users/jlynn/Documents/Codex/2026-08-19/what"]
+trust_level = "trusted"
+
 [tui]
 status_line = ["model-with-reasoning", "current-dir", "git-branch", "context-remaining"]
 status_line_use_colors = true
 theme = "dark-neon"
+terminal_title = ["activity", "project-name", "thread-title"]
 
 [tui.model_availability_nux]
 "gpt-5.6-sol" = 4
@@ -48,15 +61,15 @@ startup_timeout_sec = 120
 NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
 NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
 NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
-NODE_REPL_TRUSTED_CODE_PATHS = "/Users/jlynn/.codex"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/jlynn/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
 CODEX_HOME = "/Users/jlynn/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,d0b55a8f9e8e7e9c88421416ea4ce9542c302abf43aa7fc871be4553ea70dd26"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
 NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = "Control desktop apps on macOS through Computer Use."
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.715.72359"
+BROWSER_USE_CODEX_APP_VERSION = "26.814.41407"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/jlynn/.codex/plugins/cache/openai-bundled/browser/26.814.41407/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
 CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
 
 [mcp_servers.computer-use]
@@ -101,27 +114,32 @@ enabled = true
 [plugins."chrome@openai-bundled"]
 enabled = true
 
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
 [marketplaces.openai-bundled]
-last_updated = "2026-08-13T20:33:19Z"
+last_updated = "2026-08-20T21:05:21Z"
 source_type = "local"
 source = "/Users/jlynn/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-08-13T20:32:53Z"
+last_updated = "2026-08-19T22:42:27Z"
 source_type = "local"
 source = "/Users/jlynn/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
 [desktop]
 conversationDetailMode = "STEPS_COMMANDS"
 ambient-suggestions-enabled = false
+keepRemoteControlAwakeWhilePluggedIn = true
+followUpQueueMode = "queue"
 
 [features]
 js_repl = false
+prevent_idle_sleep = true
+memories = true
 
 [shell_environment_policy.set]
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
 NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,d0b55a8f9e8e7e9c88421416ea4ce9542c302abf43aa7fc871be4553ea70dd26"
-NODE_REPL_TRUSTED_CODE_PATHS = "/Users/jlynn/.codex"
 
 [hooks.state]
 

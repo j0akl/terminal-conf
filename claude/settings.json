@@ -13,13 +13,6 @@
     "defaultMode": "auto"
   },
   "model": "opus[1m]",
-  "worktree": {
-    "baseRef": "fresh"
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
   "hooks": {
     "Stop": [
       {
@@ -27,12 +20,19 @@
           {
             "type": "command",
             "command": "bash ~/.claude/notify-stop.sh",
-            "async": true,
-            "timeout": 10
+            "timeout": 10,
+            "async": true
           }
         ]
       }
     ]
+  },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
     "codex@openai-codex": true,
@@ -47,6 +47,10 @@
     }
   },
   "effortLevel": "xhigh",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
   "theme": "dark-daltonized",
   "editorMode": "normal",
   "preferredNotifChannel": "terminal_bell",
@@ -54,9 +58,38 @@
   "teammateMode": "auto",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "voiceEnabled": true,
-  "voice": {
-    "enabled": true,
-    "mode": "hold"
-  }
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Deploying or mutating the `prod-mirror` target of bioscope-ai/patient-survey via its npm scripts (deploy:prod-mirror, deploy:hosting:prod-mirror, deploy:all:prod-mirror, import:hosting:prod-mirror, setup:prod-mirror)",
+      "AWS CLI writes or deletes against AWS Amplify Hosting apps or branches for bioscope-ai/patient-survey"
+    ],
+    "environment": [
+      "### Org-wide",
+      "**Organization**: bioscope-ai (GitHub org for this repo's remote github.com:bioscope-ai/patient-survey.git)",
+      "**Cloud provider(s)**: AWS — AWS Amplify Hosting serves this repo's static site; `aws` CLI used routinely outside Claude (27x in shell history)",
+      "**Repository visibility**: private (per authenticated gh API for bioscope-ai/patient-survey)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Org-specific CLIs**: None configured",
+      "**Secrets management**: None configured",
+      "**Default / protected branches**: default branch `main`; `main` is a protected branch and the active ruleset `Main Ruleset With Approvals` applies (approvals required)",
+      "**CI/CD deploy targets**: AWS Amplify Hosting for bioscope-ai/patient-survey — every push to `main` triggers an Amplify build via `amplify.yml` and redeploys the static site; GitHub Actions workflows present under .github/workflows",
+      "**Network posture**: None configured",
+      "**Source control**: The trusted repo github.com:bioscope-ai/patient-survey.git and its remote(s) only — as scoped by the Trusted repo and Repository visibility entries above",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: this repo handles patient-derived data — treat `lambda/lumina/secrets.ts`, `lambda/invite/upload-allowlist.*`, `lambda/track-my-stack/egress.*` and `lambda/track-my-stack/nih-egress.*` as sensitive, along with `.env` and `.env.local` (gitignored); plus any file or store holding personal data, confidential business data, credentials, regulated data, or similarly sensitive material; preserve exact handles when known and share only with audiences cleared at the [named+specifics] bar",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment (hyphen/underscore/dot-delimited — e.g. matches `prod-db`, not `producer`); in this repo that includes the `prod-mirror` npm script targets (deploy/import/verify/synth/setup/deployed:*prod-mirror*)",
+      "**Protected deployment namespaces / environments**: the `prod-mirror` target used by this repo's package.json scripts, and AWS Amplify Hosting production for bioscope-ai/patient-survey (`main` branch)",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment — including this repo's CDK stacks reached through the `prod-mirror` scripts",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development on bioscope-ai/patient-survey (static front-end plus Lambda handlers), run from a git worktree under /Users/jlynn/dev/patient-survey/.claude/worktrees/",
+      "**Trusted repo**: github.com:bioscope-ai/patient-survey.git (private) and its configured remote(s), including the worktree checkout at /Users/jlynn/dev/patient-survey/.claude/worktrees/mir-179-helix-rebrand. Confidential material is fine in this private repo; content ported, repointed, or first read from outside this session's repo is not this repo's own work, whoever directed the port. Visibility scopes confidential material only: secrets and sensitive data (personal & entrusted) are never cleared into any repo by its visibility (see Definitions).",
+      "**Org-specific CLIs**: None configured — `aws` and `gh` appear in shell history but are standard tools"
+    ]
+  },
+  "voiceEnabled": true
 }

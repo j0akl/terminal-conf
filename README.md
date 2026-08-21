@@ -92,10 +92,10 @@ and zoxide (`z <dir>`) are wired up when those tools are present.
 **tmux** — `C-a` prefix, vim-style splits/navigation, labeled pane header bars
 with heavy borders so panes are easy to tell apart. `prefix + R` reloads.
 
-**Codex / Claude Code** — shared `ticket-close` and `hipaa-code-review` skills.
-`ticket-close` uses matching native subagent roles in both tools for research,
-reproduction, planning, implementation, and review. Claude Code also uses the
-`dark-daltonized` theme, `opus` model, and a custom
+**Codex / Claude Code** — shared `$handoff` / `/handoff`, `ticket-close`, and
+`hipaa-code-review` skills. `ticket-close` uses matching native subagent roles in
+both tools for research, reproduction, planning, implementation, and review.
+Claude Code also uses the `dark-daltonized` theme, `opus` model, and a custom
 statusline showing `user@host:cwd`, git branch + dirty marker, and the model.
 
 ## Notes / gotchas
