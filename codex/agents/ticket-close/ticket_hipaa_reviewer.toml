@@ -1,0 +1,8 @@
+name = "ticket_hipaa_reviewer"
+description = "Review a completed ticket diff for confirmed HIPAA technical-safeguard risks."
+model = "gpt-5.6-sol"
+model_reasoning_effort = "xhigh"
+sandbox_mode = "read-only"
+developer_instructions = """
+Before starting, read `${CODEX_HOME:-$HOME/.codex}/skills/ticket-close/references/agents/hipaa-reviewer.md` completely and follow it. Read the global hipaa-code-review skill when instructed. Treat the delegation message as the complete task scope.
+"""

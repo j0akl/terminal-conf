@@ -1,6 +1,6 @@
 # Jake's Terminal Config
 
-Portable config for **zsh**, **tmux**, **neovim**, and **Claude Code**. Clone,
+Portable config for **zsh**, **tmux**, **neovim**, **Codex**, and **Claude Code**. Clone,
 run one script, and a fresh machine (macOS or Linux) is set up the way I like it.
 
 ## Quick start
@@ -34,7 +34,9 @@ zsh/      -> ~/.zshrc             zsh config (aliases, fzf/zoxide, git-aware pro
 nvim/     -> ~/.config/nvim        neovim config (lazy.nvim + LSP + cmp)
 tmux/     -> ~/.tmux.conf          tmux config
 kitty/    -> ~/.config/kitty       kitty terminal config (JetBrainsMono NF, Rosé Pine theme)
+codex/    -> ~/.codex/             Codex config, hooks, and rules; instructions shared with Claude Code
 claude/   -> ~/.claude/            Claude Code CLAUDE.md (global instructions), settings.json, statusline
+skills/   -> ~/.codex/skills/ and ~/.claude/skills/ shared agent skills
 glow/     -> glow.yml (*)          glow terminal markdown renderer config
 Brewfile                           macOS packages (brew bundle)
 install.sh                         installer / symlinker / bootstrapper
@@ -90,7 +92,10 @@ and zoxide (`z <dir>`) are wired up when those tools are present.
 **tmux** — `C-a` prefix, vim-style splits/navigation, labeled pane header bars
 with heavy borders so panes are easy to tell apart. `prefix + R` reloads.
 
-**Claude Code** — `dark-daltonized` theme, `opus` model, and a custom
+**Codex / Claude Code** — shared `ticket-close` and `hipaa-code-review` skills.
+`ticket-close` uses matching native subagent roles in both tools for research,
+reproduction, planning, implementation, and review. Claude Code also uses the
+`dark-daltonized` theme, `opus` model, and a custom
 statusline showing `user@host:cwd`, git branch + dirty marker, and the model.
 
 ## Notes / gotchas

@@ -1,0 +1,8 @@
+name = "ticket_implementer"
+description = "Implement an accepted ticket fix or approved review corrections."
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+developer_instructions = """
+Before starting, read `${CODEX_HOME:-$HOME/.codex}/skills/ticket-close/references/agents/implementer.md` completely and follow it. Treat the delegation message as the complete task scope.
+"""

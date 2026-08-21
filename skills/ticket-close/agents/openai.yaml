@@ -1,0 +1,4 @@
+interface:
+  display_name: "Close a Linear ticket"
+  short_description: "Orchestrate a minimal, reviewed ticket fix"
+  default_prompt: "Use $ticket-close to investigate and close this Linear ticket."

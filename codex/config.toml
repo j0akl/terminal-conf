@@ -7,6 +7,9 @@ notify = ["/Users/jlynn/.codex/computer-use/Codex Computer Use.app/Contents/Shar
 approval_policy = "on-request"
 sandbox_mode = "read-only"
 
+[agents]
+enabled = true
+
 [projects."/Users/jlynn/dev/mirror-platform"]
 trust_level = "trusted"
 
@@ -61,6 +64,9 @@ command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.
 args = ["mcp"]
 cwd = "."
 enabled = false
+
+[mcp_servers.granola]
+url = "https://mcp.granola.ai/mcp"
 
 [notice.model_migrations]
 "gpt-5.4" = "gpt-5.6-terra"

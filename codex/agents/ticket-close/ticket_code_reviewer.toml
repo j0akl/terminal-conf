@@ -1,0 +1,8 @@
+name = "ticket_code_reviewer"
+description = "Review a completed ticket diff for confirmed correctness defects."
+model = "gpt-5.6-sol"
+model_reasoning_effort = "xhigh"
+sandbox_mode = "read-only"
+developer_instructions = """
+Before starting, read `${CODEX_HOME:-$HOME/.codex}/skills/ticket-close/references/agents/code-reviewer.md` completely and follow it. Treat the delegation message as the complete task scope.
+"""
